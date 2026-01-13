@@ -13,4 +13,4 @@ spec:
   rules:
   - to:
     - operation:
-        paths: ["*"] # Only validate V1 API traffic
+        paths: ["*"] # Validate all paths
