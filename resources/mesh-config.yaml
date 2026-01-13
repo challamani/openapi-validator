@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: istio
+  namespace: istio-system
+data:
+  mesh: |-
+    accessLogFile: /dev/stdout
+    defaultConfig:
+      discoveryAddress: istiod.istio-system.svc:15012
+    defaultProviders:
+      metrics:
+      - prometheus
+    enablePrometheusMerge: true
+    extensionProviders:
+    - name: oas-validator-service
+      envoyExtAuthzGrpc:
+        service: localhost
+        port: 9000
+        statusOnError: "200"
+        withRequestBody:
+          maxRequestBytes: 102400
+    - envoyOtelAls:
+        port: 4317
+        service: opentelemetry-collector.observability.svc.cluster.local
+      name: otel
+    - name: skywalking
+      skywalking:
+        port: 11800
+        service: tracing.istio-system.svc.cluster.local
+    - name: otel-tracing
+      opentelemetry:
+        port: 4317
+        service: opentelemetry-collector.observability.svc.cluster.local
+    - name: jaeger
+      opentelemetry:
+        port: 4317
+        service: jaeger-collector.istio-system.svc.cluster.local
+    rootNamespace: istio-system
+    trustDomain: cluster.local
+  meshNetworks: 'networks: {}'

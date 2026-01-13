@@ -1,0 +1,24 @@
+spec:
+  template:
+    spec:
+      containers:
+      - name: oas-validator
+        image: oas-validator:local
+        imagePullPolicy: IfNotPresent
+        volumeMounts:
+        - name: spec-json
+          mountPath: /etc/openapi
+        ports:
+        - containerPort: 9000
+          name: grpc-auth
+        resources:
+          limits:
+            cpu: 200m
+            memory: 256Mi
+          requests:
+            cpu: 100m
+            memory: 128Mi
+      volumes:
+      - name: spec-json
+        configMap:
+          name: oas-spec-config

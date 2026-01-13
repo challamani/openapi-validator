@@ -1,0 +1,16 @@
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: validate-api-traffic
+  namespace: istio-system
+spec:
+  selector:
+    matchLabels:
+      istio: ingressgateway
+  action: CUSTOM
+  provider:
+    name: "oas-validator-service"
+  rules:
+  - to:
+    - operation:
+        paths: ["*"] # Only validate V1 API traffic
