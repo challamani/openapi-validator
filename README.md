@@ -73,7 +73,7 @@ kubectl patch deployment istio-ingressgateway \
   -n istio-system \
   --patch-file resources/oas-validator-service/istio-ingressgateway-patch.yaml
 
-#kubectl rollout restart deployment istio-ingressgateway -n istio-system
+kubectl rollout restart deployment istio-ingressgateway -n istio-system
 
 #5. Deploy the OAS Validator service
 kubectl apply -f resources/oas-validator-service/service.yaml
