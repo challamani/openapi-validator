@@ -5,17 +5,10 @@ metadata:
   namespace: istio-system
 data:
   mesh: |-
-    accessLogFile: /dev/stdout
-    defaultConfig:
-      discoveryAddress: istiod.istio-system.svc:15012
-    defaultProviders:
-      metrics:
-      - prometheus
-    enablePrometheusMerge: true
     extensionProviders:
-    - name: oas-validator-service
+    - name: "oas-validator-service"
       envoyExtAuthzGrpc:
-        service: localhost
+        service: oas-validator-service.istio-system.svc.cluster.local
         port: 9000
         statusOnError: "200"
         withRequestBody:
@@ -36,6 +29,15 @@ data:
       opentelemetry:
         port: 4317
         service: jaeger-collector.istio-system.svc.cluster.local
+    rootNamespace: istio-system
+    trustDomain: cluster.local
+    accessLogFile: /dev/stdout
+    defaultProviders:
+      metrics:
+      - prometheus
+    enablePrometheusMerge: true
+    defaultConfig:
+      discoveryAddress: istiod.istio-system.svc:15012
     rootNamespace: istio-system
     trustDomain: cluster.local
   meshNetworks: 'networks: {}'

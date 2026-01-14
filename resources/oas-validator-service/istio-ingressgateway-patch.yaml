@@ -3,7 +3,7 @@ spec:
     spec:
       containers:
       - name: oas-validator
-        image: oas-validator:local
+        image: oas-validator:latest
         imagePullPolicy: IfNotPresent
         volumeMounts:
         - name: spec-json
